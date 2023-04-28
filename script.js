@@ -1,4 +1,6 @@
 const containerMovies = document.querySelector(".movies");
+const prevButton = document.querySelector(".btn-prev");
+const nextButton = document.querySelector(".btn-next");
 
 
 function showAll(movies) {
@@ -35,10 +37,10 @@ function showAll(movies) {
 async function loadAll() {
     try {
         const response = await api.get("/3/discover/movie?language=pt-BR&include_adult=false");
-        console.log(response.data.results);
-        showAll(response.data.results);
+        const array = response.data.results.slice(0,18);
+        showAll(array);
     } catch (error) {
-        console.log(error.response);
+        return;
     }
 }
 
