@@ -3,9 +3,11 @@ const prevButton = document.querySelector(".btn-prev");
 const nextButton = document.querySelector(".btn-next");
 
 let counterMovies = 0;
+let array = [];
 
 function showAll(array) {
-    for (const item of array.slice(containerMovies, counterMovies + 6)) {
+    containerMovies.innerHTML = "";
+    for (const item of array.slice(counterMovies, counterMovies + 6)) {
         const divMovie = document.createElement("div");
         divMovie.classList.add("movie");
         divMovie.style.backgroundImage = `url('${item.poster_path}')`;
@@ -30,14 +32,14 @@ function showAll(array) {
         imgStar.alt = "Estrela";
         spanMovieRating.appendChild(imgStar);
 
-    };
+    }
 }
 
 
 async function loadAll() {
     try {
         const response = await api.get("/3/discover/movie?language=pt-BR&include_adult=false");
-        const array = response.data.results.slice(0, 18);
+        array = response.data.results.slice(0, 18);
         showAll(array);
     } catch (error) {
         return;
@@ -47,25 +49,23 @@ async function loadAll() {
 loadAll();
 
 prevButton.addEventListener("click", () => {
-    containerMovies.innerHTML = "";
+    containerMovies.replaceChildren();
     if (counterMovies === 0) {
-
         counterMovies = 12;
         showAll(array);
+    } else {
+        counterMovies -= 6
+        showAll(array);
     }
-
-    counterMovies -= 6
-    showAll(array);
 });
 
 nextButton.addEventListener("click", () => {
-    containerMovies.innerHTML = "";
-    if (counterMovies == 12) {
+    if (counterMovies === 12) {
         counterMovies = 0;
         showAll(array);
+    } else if (counterMovies < 12) {
+        counterMovies += 6;
+        showAll(array);
     }
-
-    counterMovies += 6;
-    showAll(array);
-
 });
+
