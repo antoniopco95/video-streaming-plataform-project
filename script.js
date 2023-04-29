@@ -1,6 +1,7 @@
 const containerMovies = document.querySelector(".movies");
 const prevButton = document.querySelector(".btn-prev");
 const nextButton = document.querySelector(".btn-next");
+const inputSearch = document.querySelector(".input");
 
 let counterMovies = 0;
 let array = [];
@@ -36,9 +37,9 @@ function showAll(array) {
 }
 
 
-async function loadAll() {
+async function loadAll(endpoint) {
     try {
-        const response = await api.get("/3/discover/movie?language=pt-BR&include_adult=false");
+        const response = await api.get(endpoint);
         array = response.data.results.slice(0, 18);
         showAll(array);
     } catch (error) {
@@ -46,7 +47,7 @@ async function loadAll() {
     }
 }
 
-loadAll();
+loadAll("/3/discover/movie?language=pt-BR&include_adult=false");
 
 prevButton.addEventListener("click", () => {
     containerMovies.replaceChildren();
@@ -68,4 +69,23 @@ nextButton.addEventListener("click", () => {
         showAll(array);
     }
 });
+
+inputSearch.addEventListener("keyup", (event) => {
+    if (event.key === "Enter" && !inputSearch.value) {
+        counterMovies = 0;
+        loadAll("/3/discover/movie?language=pt-BR&include_adult=false");
+        showAll(array);
+    } else if (event.key === "Enter" && inputSearch.value) {
+        counterMovies = 0;
+        loadAll(`/3/search/movie?language=pt-BR&include_adult=false&query=${inputSearch.value}`);
+        showAll(array);
+        inputSearch.value = "";
+    }
+});
+
+
+
+
+
+
 
