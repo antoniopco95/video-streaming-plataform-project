@@ -4,7 +4,7 @@ const nextButton = document.querySelector(".btn-next");
 const inputSearch = document.querySelector(".input");
 
 let counterMovies = 0;
-let array = [];
+
 
 function showAll(array) {
     containerMovies.innerHTML = "";
