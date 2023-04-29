@@ -2,6 +2,13 @@ const containerMovies = document.querySelector(".movies");
 const prevButton = document.querySelector(".btn-prev");
 const nextButton = document.querySelector(".btn-next");
 const inputSearch = document.querySelector(".input");
+const highlightVideo = document.querySelector(".highlight__video");
+const highlightTitle = document.querySelector(".highlight__title");
+const highlightRating = document.querySelector(".highlight__rating");
+const highlightGenres = document.querySelector(".highlight__genres");
+const highlightLaunch = document.querySelector(".highlight__launch");
+const highlightDescription = document.querySelector(".highlight__description");
+const highlightVideoLink = document.querySelector(".highlight__video-link");
 
 let counterMovies = 0;
 
@@ -82,6 +89,29 @@ inputSearch.addEventListener("keyup", (event) => {
         inputSearch.value = "";
     }
 });
+
+async function dayMovie() {
+    try {
+        const generalEndpoint = await api.get("/3/movie/436969?language=pt-BR");
+        const videosEndpoint = await api.get("/3/movie/436969/videos?language=pt-BR");
+        let stringGenres = [""];
+
+        highlightVideo.style.backgroundImage = `url('${generalEndpoint.data.backdrop_path}')`;
+        highlightTitle.textContent = generalEndpoint.data.title;
+        highlightRating.textContent = generalEndpoint.data.vote_average;
+
+        for (const genre of generalEndpoint.data.genres) {
+            stringGenres.push(genre.name);
+        }
+        stringGenres.shift();
+        highlightGenres.textContent = stringGenres.join(", ");
+
+    } catch (error) {
+        return;
+    }
+}
+
+dayMovie();
 
 
 
