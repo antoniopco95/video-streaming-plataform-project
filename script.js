@@ -57,7 +57,6 @@ async function loadAll(endpoint) {
 loadAll("/3/discover/movie?language=pt-BR&include_adult=false");
 
 prevButton.addEventListener("click", () => {
-    containerMovies.replaceChildren();
     if (counterMovies === 0) {
         counterMovies = 12;
         showAll(array);
@@ -98,7 +97,7 @@ async function dayMovie() {
 
         highlightVideo.style.backgroundImage = `url('${generalEndpoint.data.backdrop_path}')`;
         highlightTitle.textContent = generalEndpoint.data.title;
-        highlightRating.textContent = generalEndpoint.data.vote_average;
+        highlightRating.textContent = generalEndpoint.data.vote_average.toFixed(1);
 
         for (const genre of generalEndpoint.data.genres) {
             stringGenres.push(genre.name);
