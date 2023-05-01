@@ -32,7 +32,7 @@ function showAll(array) {
 
         const spanMovieRating = document.createElement("span");
         spanMovieRating.classList.add("movie__rating");
-        spanMovieRating.textContent = item.vote_average;
+        spanMovieRating.textContent = item.vote_average.toFixed(1);
         divMovieInfo.appendChild(spanMovieRating);
 
         const imgStar = document.createElement("img");
