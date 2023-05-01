@@ -95,15 +95,29 @@ async function dayMovie() {
         const videosEndpoint = await api.get("/3/movie/436969/videos?language=pt-BR");
         let stringGenres = [""];
 
-        highlightVideo.style.backgroundImage = `url('${generalEndpoint.data.backdrop_path}')`;
+        highlightVideo.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('${generalEndpoint.data.backdrop_path}')`;
+        highlightVideo.style.backgroundSize = "cover";
         highlightTitle.textContent = generalEndpoint.data.title;
         highlightRating.textContent = generalEndpoint.data.vote_average.toFixed(1);
 
         for (const genre of generalEndpoint.data.genres) {
             stringGenres.push(genre.name);
         }
+
         stringGenres.shift();
+
         highlightGenres.textContent = stringGenres.join(", ");
+
+        highlightLaunch.textContent = new Date(generalEndpoint.data.release_date).toLocaleDateString("pt-BR", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            timeZone: "UTC",
+        });
+
+        highlightDescription.textContent = generalEndpoint.data.overview;
+
+        highlightVideoLink.href = `https://www.youtube.com/watch?v=${videosEndpoint.data.results[0].key}`;
 
     } catch (error) {
         return;
