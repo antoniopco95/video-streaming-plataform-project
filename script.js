@@ -17,6 +17,9 @@ const modalAverage = document.querySelector(".modal__average");
 const modalImage = document.querySelector(".modal__img");
 const modalGenres = document.querySelector(".modal__genres");
 const modalClose = document.querySelector(".modal__close");
+const themeButton = document.querySelector(".btn-theme");
+const root = document.querySelector(":root");
+const logo = document.querySelector(".logo");
 
 let counterMovies = 0;
 
@@ -65,9 +68,9 @@ modalClose.addEventListener("click", () => {
 });
 
 window.addEventListener("click", (event) => {
-if(event.target === modal) {
-    modal.classList.add("hidden");
-}
+    if (event.target === modal) {
+        modal.classList.add("hidden");
+    }
 })
 
 async function loadAll(endpoint) {
@@ -168,13 +171,35 @@ async function loadModal(item) {
             spanGenre.textContent = genre.name;
             modalGenres.appendChild(spanGenre);
         }
-
-
-
     } catch (error) {
         return;
     }
 }
+
+themeButton.addEventListener("click", () => {
+
+    const currentBgColor = root.style.getPropertyValue("--background");
+
+    if (!currentBgColor || currentBgColor === "#fff") {
+        logo.src = "./assets/logo.svg";
+        nextButton.src = "./assets/arrow-right-light.svg";
+        prevButton.src = "./assets/arrow-left-light.svg";
+        modalClose.src = "./assets/close.svg";
+        themeButton.src = "./assets/dark-mode.svg";
+        root.style.setProperty("--background", "#1B2028");
+        root.style.setProperty("--text-color", "#FFFFFF");
+        root.style.setProperty("--bg-secondary", "#2D3440");
+        return;
+    }
+        logo.src = "./assets/logo-dark.png";
+        nextButton.src = "./assets/arrow-right-dark.svg";
+        prevButton.src = "./assets/arrow-left-dark.svg";
+        modalClose.src = "./assets/close-dark.svg";
+        themeButton.src = "./assets/light-mode.svg";
+        root.style.setProperty("--background", "#FFF");
+        root.style.setProperty("--text-color", "#1b2028");
+        root.style.setProperty("--bg-secondary", "#ededed");
+});
 
 
 
