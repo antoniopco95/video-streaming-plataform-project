@@ -9,6 +9,11 @@ const highlightGenres = document.querySelector(".highlight__genres");
 const highlightLaunch = document.querySelector(".highlight__launch");
 const highlightDescription = document.querySelector(".highlight__description");
 const highlightVideoLink = document.querySelector(".highlight__video-link");
+const modal = document.querySelector(".modal");
+const modalBody = document.querySelector(".modal__body");
+const modalTitle = document.querySelector(".modal__title");
+const modalDescription = document.querySelector(".modal__description");
+const modalAverage = document.querySelector(".modal__average");
 
 let counterMovies = 0;
 
@@ -39,6 +44,10 @@ function showAll(array) {
         imgStar.src = "./assets/estrela.svg";
         imgStar.alt = "Estrela";
         spanMovieRating.appendChild(imgStar);
+
+        divMovie.addEventListener("click", () => {
+            modal.classList.remove("hidden");
+        })
 
     }
 }
@@ -125,6 +134,18 @@ async function dayMovie() {
 }
 
 dayMovie();
+
+async function loadModal() {
+    try {
+        const modalInfo = await api.get("/3/movie/`${}`?language=pt-BR");
+        console.log(modalInfo);
+    } catch (error) {
+        return;
+    }
+}
+
+loadModal();
+
 
 
 
