@@ -14,6 +14,9 @@ const modalBody = document.querySelector(".modal__body");
 const modalTitle = document.querySelector(".modal__title");
 const modalDescription = document.querySelector(".modal__description");
 const modalAverage = document.querySelector(".modal__average");
+const modalImage = document.querySelector(".modal__img");
+const modalGenres = document.querySelector(".modal__genres");
+const modalClose = document.querySelector(".modal__close");
 
 let counterMovies = 0;
 
@@ -47,11 +50,25 @@ function showAll(array) {
 
         divMovie.addEventListener("click", () => {
             modal.classList.remove("hidden");
+            loadModal(item.id);
         })
 
     }
 }
 
+modalBody.addEventListener("click", () => {
+    modal.classList.add("hidden");
+});
+
+modalClose.addEventListener("click", () => {
+    modal.classList.add("hidden");
+});
+
+window.addEventListener("click", (event) => {
+if(event.target === modal) {
+    modal.classList.add("hidden");
+}
+})
 
 async function loadAll(endpoint) {
     try {
@@ -135,16 +152,31 @@ async function dayMovie() {
 
 dayMovie();
 
-async function loadModal() {
+async function loadModal(item) {
     try {
-        const modalInfo = await api.get("/3/movie/`${}`?language=pt-BR");
-        console.log(modalInfo);
+        const modalInfo = await api.get(`/3/movie/${item}?language=pt-BR`);
+
+        modalTitle.textContent = modalInfo.data.title;
+        modalImage.src = modalInfo.data.belongs_to_collection.backdrop_path;
+        modalDescription.textContent = modalInfo.data.overview;
+        modalAverage.textContent = modalInfo.data.vote_average.toFixed(1);
+        modalGenres.innerHTML = "";
+
+        for (const genre of modalInfo.data.genres) {
+            const spanGenre = document.createElement("span");
+            spanGenre.classList.add("modal__genre");
+            spanGenre.textContent = genre.name;
+            modalGenres.appendChild(spanGenre);
+        }
+
+
+
     } catch (error) {
         return;
     }
 }
 
-loadModal();
+
 
 
 
