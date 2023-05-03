@@ -178,9 +178,23 @@ async function loadModal(item) {
 
 themeButton.addEventListener("click", () => {
 
-    const currentBgColor = root.style.getPropertyValue("--background");
+    const currentTheme = localStorage.getItem("theme");
 
-    if (!currentBgColor || currentBgColor === "#fff") {
+    if (!currentTheme || currentTheme === "light") {
+        localStorage.setItem("theme", "dark");
+        applyCurrentTheme();
+        return;
+    }
+
+    localStorage.setItem("theme", "light");
+    applyCurrentTheme();
+});
+
+
+function applyCurrentTheme() {
+    const currentTheme = localStorage.getItem("theme");
+
+    if (!currentTheme || currentTheme === "light") {
         logo.src = "./assets/logo.svg";
         nextButton.src = "./assets/arrow-right-light.svg";
         prevButton.src = "./assets/arrow-left-light.svg";
@@ -191,16 +205,16 @@ themeButton.addEventListener("click", () => {
         root.style.setProperty("--bg-secondary", "#2D3440");
         return;
     }
-        logo.src = "./assets/logo-dark.png";
-        nextButton.src = "./assets/arrow-right-dark.svg";
-        prevButton.src = "./assets/arrow-left-dark.svg";
-        modalClose.src = "./assets/close-dark.svg";
-        themeButton.src = "./assets/light-mode.svg";
-        root.style.setProperty("--background", "#FFF");
-        root.style.setProperty("--text-color", "#1b2028");
-        root.style.setProperty("--bg-secondary", "#ededed");
-});
 
+    logo.src = "./assets/logo-dark.png";
+    nextButton.src = "./assets/arrow-right-dark.svg";
+    prevButton.src = "./assets/arrow-left-dark.svg";
+    modalClose.src = "./assets/close-dark.svg";
+    themeButton.src = "./assets/light-mode.svg";
+    root.style.setProperty("--background", "#FFF");
+    root.style.setProperty("--text-color", "#1b2028");
+    root.style.setProperty("--bg-secondary", "#ededed");
+}
 
 
 
