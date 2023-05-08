@@ -57,7 +57,7 @@ function showAll(array) {
         })
 
     }
-}
+};
 
 modalBody.addEventListener("click", () => {
     modal.classList.add("hidden");
@@ -71,7 +71,7 @@ window.addEventListener("click", (event) => {
     if (event.target === modal) {
         modal.classList.add("hidden");
     }
-})
+});
 
 async function loadAll(endpoint) {
     try {
@@ -81,7 +81,7 @@ async function loadAll(endpoint) {
     } catch (error) {
         return;
     }
-}
+};
 
 loadAll("/3/discover/movie?language=pt-BR&include_adult=false");
 
@@ -151,7 +151,7 @@ async function dayMovie() {
     } catch (error) {
         return;
     }
-}
+};
 
 dayMovie();
 
@@ -174,7 +174,7 @@ async function loadModal(item) {
     } catch (error) {
         return;
     }
-}
+};
 
 themeButton.addEventListener("click", () => {
 
@@ -214,7 +214,7 @@ function applyCurrentTheme() {
     root.style.setProperty("--background", "#FFF");
     root.style.setProperty("--text-color", "#1b2028");
     root.style.setProperty("--bg-secondary", "#ededed");
-}
+};
 
 
 
